@@ -7,7 +7,9 @@
 
 ## Training class
 教育部資訊安全人才培育計畫&東華大學-東華資訊安全研究社 網路攻防暨逆向工程工作坊
+
 Difficulty: Easy
+
 ## Introduction
 After the training class, I put my resource here including
 - slide
