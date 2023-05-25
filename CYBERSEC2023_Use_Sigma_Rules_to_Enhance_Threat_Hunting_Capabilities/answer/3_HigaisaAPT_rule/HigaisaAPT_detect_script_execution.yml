@@ -1,0 +1,38 @@
+title: Potential HigaisaAPT behavior - javascript execution
+status: test
+description: Detects javascript execution used by HigaisaAPT
+references:
+- https://www.malwarebytes.com/blog/news/2020/06/higaisa
+tags:
+    - attack.execution
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    eventid:
+        EventID: 1
+    script_image:
+        Image|endswith:
+            - '\wscript.exe'
+            - '\cscript.exe'
+        CommandLine|contains:
+            - 'C:\Users\'
+            - 'C:\ProgramData\'
+    selection_file_extenstion:
+        CommandLine|contains:
+            - '.jse'
+            - '.vbe'
+            - '.js'
+            - '.vba'
+            - '.vbs'
+    selection_HigaisaAPT_signature:
+        - CommandLine|contains: 
+            - 'gosia.exe'
+            - 'svchastd'
+            - 'Officeupdated'
+    falsepositive:
+        ParentImage|contains: '\winzip'
+    condition: eventid and script_image and 1 of selection* and not falsepositive
+falsepositives:
+    - unknown
+level: high

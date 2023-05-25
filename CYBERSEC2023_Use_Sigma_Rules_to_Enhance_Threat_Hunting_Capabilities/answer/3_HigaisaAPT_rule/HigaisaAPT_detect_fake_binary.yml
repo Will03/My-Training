@@ -1,0 +1,36 @@
+title: Potential HigaisaAPT behavior - payload decode
+status: test
+description: Detects payload decoding used by HigaisaAPT
+references:
+- https://www.malwarebytes.com/blog/news/2020/06/higaisa
+tags:
+    - attack.defense_evasion
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    eventid:
+        EventID: 1
+    certutil_copy_behavior:
+        CommandLine|contains: 
+            - 'certutil.exe'
+            - 'copy '
+        OriginalFileName:
+            - 'cmd.exe'
+    certutil_behavior:        
+        - OriginalFileName:
+            - 'certutil.exe'
+        - CommandLine|contains:
+            - '-decode '
+            - '/decode '
+            - '-decodehex '
+            - '/decodehex '
+    selection_HigaisaAPT_signature:
+        - CommandLine|contains: 
+            - 'gosia.exe'
+            - 'svchastd'
+            - 'Officeupdated'
+    condition: eventid and 1 of certutil* and selection_HigaisaAPT_signature
+falsepositives:
+    - unknown
+level: high

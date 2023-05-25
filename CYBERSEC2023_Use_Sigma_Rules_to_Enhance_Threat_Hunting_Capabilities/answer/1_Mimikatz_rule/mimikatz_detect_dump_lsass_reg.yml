@@ -1,0 +1,24 @@
+title: Mimikatz Detection LSASS Registry Save
+status: test
+description: Detects registry save event to store credential
+references:
+    - https://www.ultimatewindowssecurity.com/blog/default.aspx?p=c2bacbe0-d4fc-4876-b6a3-1995d653f32a
+tags:
+    - attack.t1003
+    - attack.s0002
+    - attack.credential_access
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    eventid:
+        - EventID: 1
+    selection:
+        CommandLine|contains: 
+            - 'save hklm\sam'
+            - 'save hklm\security'
+        OriginalFileName|contains: 'reg.exe'
+    condition: selection and eventid
+falsepositives:
+    - unknown
+level: high

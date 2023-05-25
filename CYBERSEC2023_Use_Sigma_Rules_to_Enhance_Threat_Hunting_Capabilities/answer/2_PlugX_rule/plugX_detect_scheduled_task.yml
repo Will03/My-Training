@@ -1,0 +1,32 @@
+title: Potential PlugX Persistence - Scheduled Task
+status: test
+description: Detects plugx persistence method with scheduled task
+references:
+- https://www.trendmicro.com/en_us/research/23/b/investigating-the-plugx-trojan-disguised-as-a-legitimate-windows.html
+tags:
+    - attack.persistence
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    eventid:
+        EventID: 1
+    selection_sch_name:
+        - Image|endswith: 'schtasks.exe'
+    selection_sch_command:
+        - CommandLine|contains: 
+            - /create 
+            - /sc
+            - /mo  
+            - /tn   
+            - /tr 
+            - /f
+    selection_plugx_signature:
+        - CommandLine|contains: 
+            - 'LKUFORYOU_1'
+            - 'x32dbg.exe'
+            - 'C:\\ProgramData\\UsersDate\\Windows_NT\\Windows'
+    condition: 1 of selection_sch* and selection_plugx_signature and eventid
+falsepositives:
+    - unknown
+level: high

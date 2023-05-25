@@ -1,0 +1,28 @@
+title: Potential HigaisaAPT behavior - lnk execution
+status: test
+description: Detects lnk decoy used by HigaisaAPT
+references:
+- https://www.malwarebytes.com/blog/news/2020/06/higaisa
+tags:
+    - attack.defense_evasion
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    eventid:
+        EventID: 1
+    lnk_behavior:
+        CommandLine|contains: '.lnk'
+        ParentImage: 'C:\Windows\explorer.exe'
+        Image|contains:
+            - 'cmd.exe'
+            - 'powershell.exe'
+    selection_HigaisaAPT_signature:
+        - CommandLine|contains: 
+            - 'gosia.exe'
+            - 'svchastd'
+            - 'Officeupdated'
+    condition: eventid and lnk_behavior and selection_HigaisaAPT_signature
+falsepositives:
+    - unknown
+level: high

@@ -1,0 +1,24 @@
+title: Potential PlugX Persistence - Registry Key Set
+status: test
+description: Detects plugx persistence method with registry set 
+references:
+- https://www.trendmicro.com/en_us/research/23/b/investigating-the-plugx-trojan-disguised-as-a-legitimate-windows.html
+tags:
+    - attack.persistence
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    eventid:
+        EventID: 13
+        EventType: 'SetValue'
+    selection_reg:
+        - TargetObject|contains: '\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\'
+        - TargetObject|endswith: 'x32dbg'
+    selection_file:
+        - Image|startswith: 'C:\\ProgramData\\UsersDate\\Windows_NT\\Windows'
+        - Image|contains: 'x32dbg'
+    condition: 1 of selection* and eventid
+falsepositives:
+    - unknown
+level: high

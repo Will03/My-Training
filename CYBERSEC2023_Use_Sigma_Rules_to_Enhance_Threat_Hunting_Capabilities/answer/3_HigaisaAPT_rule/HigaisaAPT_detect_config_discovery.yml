@@ -1,0 +1,32 @@
+title: Potential HigaisaAPT behavior - system config read
+status: test
+description: Detects system config read used by HigaisaAPT
+references:
+- https://www.malwarebytes.com/blog/news/2020/06/higaisa
+tags:
+    - attack.defense_evasion
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    eventid:
+        EventID: 1
+    ipconfig_binary:
+        - OriginalFileName|contains: 
+            - 'ipconfig'
+    ipconfig_behavior:
+        CommandLine|contains|all: 
+            - 'ipconfig'
+            - '>'
+        Image|contains: 'cmd.exe'
+    selection_HigaisaAPT_signature:
+        - CommandLine|contains: 
+            - 'gosia.exe'
+            - 'svchastd'
+            - 'Officeupdated'
+        - ParentCommandLine|contains:
+            - '.js'
+    condition: eventid and 1 of ipconfig*
+falsepositives:
+    - unknown
+level: high

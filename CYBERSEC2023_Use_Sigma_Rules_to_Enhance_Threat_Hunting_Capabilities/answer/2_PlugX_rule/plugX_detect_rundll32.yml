@@ -1,0 +1,29 @@
+title: Potential PlugX Execution - rundll32
+status: test
+description: Detects plugx proxy execution method with rundll32
+references:
+- https://www.trendmicro.com/en_us/research/23/b/investigating-the-plugx-trojan-disguised-as-a-legitimate-windows.html
+tags:
+    - attack.defense_evasion
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    eventid:
+        EventID: 1
+    selection_rundll32_name:
+        - Image|endswith: 'rundll32.exe'
+    selection_rundll32_command:
+        - CommandLine|contains|all: 
+            - 'ShellExec_RunDLL'
+            - 'SHELL32.DLL'
+    selection_plugx_signature:
+        - CommandLine|contains: 
+            - 'Start'
+        - ParentImage|contains: 
+            - 'x32dbg.exe'
+            - 'C:\\ProgramData\\UsersDate\\Windows_NT\\Windows'
+    condition: 1 of selection_rundll32* and selection_plugx_signature
+falsepositives:
+    - unknown
+level: high

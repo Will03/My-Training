@@ -1,0 +1,42 @@
+title: Mimikatz Detection Suspicious Process Creation
+status: test
+description: This method detects mimikatz keywords in commandline when process creation event
+references:
+    - https://www.ired.team/offensive-security/credential-access-and-credential-dumping/dump-credentials-from-lsass-process-without-mimikatz
+    - https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/win_alert_mimikatz_keywords.yml
+tags:
+    - attack.credential_access
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    eventid:
+        - EventID: 1
+    selection:
+        CommandLine|contains:
+            - 'dpapi::masterkey'
+            - 'eo.oe.kiwi'
+            - 'event::clear'
+            - 'event::drop'
+            - 'gentilkiwi.com'
+            - 'kerberos::golden'
+            - 'kerberos::ptc'
+            - 'kerberos::ptt'
+            - 'kerberos::tgt'
+            - 'Kiwi Legit Printer'
+            - 'lsadump::'
+            - 'mimidrv.sys'
+            - '\mimilib.dll'
+            - 'misc::printnightmare'
+            - 'misc::shadowcopies'
+            - 'misc::skeleton'
+            - 'privilege::backup'
+            - 'privilege::debug'
+            - 'privilege::driver'
+            - 'sekurlsa::'
+    condition: selection and eventid
+falsepositives:
+    - Naughty administrators
+    - AV Signature updates
+    - Files with Mimikatz in their filename
+level: high

